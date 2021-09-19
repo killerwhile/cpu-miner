@@ -195,8 +195,21 @@ void on_connect(uv_connect_t *req, int status)
     uv_read_start(req->handle, alloc_buffer, on_read);
 }
 
-int main()
+int main(int argc, char **argv)
 {
+    for (int i=0; i<argc; i++)
+        printf("%s\n", argv[i]);
+
+    char broker_ip[16];
+    memset(broker_ip, '\0', sizeof(broker_ip));
+
+    if (argc >= 2)
+      strcpy(broker_ip, argv[1]);
+    else
+      strcpy(broker_ip, "127.0.0.1");
+
+    printf("broker_ip %s\n", broker_ip);
+
     loop = uv_default_loop();
 
     uv_tcp_t* socket = malloc(sizeof(uv_tcp_t));
@@ -205,7 +218,7 @@ int main()
     uv_connect_t* connect = malloc(sizeof(uv_connect_t));
 
     struct sockaddr_in dest;
-    uv_ip4_addr("127.0.0.1", 10973, &dest);
+    uv_ip4_addr(broker_ip, 10973, &dest);
 
     uv_tcp_connect(connect, socket, (const struct sockaddr*)&dest, on_connect);
     uv_run(loop, UV_RUN_DEFAULT);
