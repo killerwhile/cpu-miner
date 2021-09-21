@@ -197,9 +197,6 @@ void on_connect(uv_connect_t *req, int status)
 
 int main(int argc, char **argv)
 {
-    for (int i=0; i<argc; i++)
-        printf("%s\n", argv[i]);
-
     char broker_ip[16];
     memset(broker_ip, '\0', sizeof(broker_ip));
 
@@ -208,7 +205,7 @@ int main(int argc, char **argv)
     else
       strcpy(broker_ip, "127.0.0.1");
 
-    printf("broker_ip %s\n", broker_ip);
+    printf("Will connect to broker @%s:10973\n", broker_ip);
 
     loop = uv_default_loop();
 
