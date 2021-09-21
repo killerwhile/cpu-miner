@@ -14,4 +14,6 @@ RUN apt update && apt install -y libuv1 && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /src/bin/cpu-miner /cpu-miner
 
+USER nobody
+
 ENTRYPOINT ["/cpu-miner"]
